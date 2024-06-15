@@ -132,8 +132,8 @@ void loop() {
   lcd.clear();
 
   delay(1000);
-  Blynk.virtualWrite(V0, suhu); //Mengirim data suhu menurut pin V0 di Blynk
-  Blynk.virtualWrite(V1, kelembaban); //Mengirim data kelembaban pin V1
+  Blynk.virtualWrite(V4, suhu); //Mengirim data suhu menurut pin V0 di Blynk
+  Blynk.virtualWrite(V5, kelembaban); //Mengirim data kelembaban pin V1
 
 }
 
