@@ -63,17 +63,17 @@ BLYNK_CONNECTED() {
 
 BLYNK_WRITE(button1_vpin) {
   relay1_state = param.asInt();
-  digitalWrite(relay1_pin, relay1_state);
+  digitalWrite(REL_1, relay1_state);
 }
 
 BLYNK_WRITE(button2_vpin) {
   relay2_state = param.asInt();
-  digitalWrite(relay2_pin, relay2_state);
+  digitalWrite(REL_2, relay2_state);
 }
 
 BLYNK_WRITE(button3_vpin) {
   relay3_state = param.asInt();
-  digitalWrite(relay3_pin, relay3_state);
+  digitalWrite(REL_3, relay3_state);
 }
 
 
@@ -100,7 +100,7 @@ void setup() {
   lcd.backlight();
 
   Blynk.begin(BLYNK_AUTH_TOKEN, ssid, pass);
-  timer.setInterval(1000L, myTimerEvent); 
+  timer.setInterval(1000L, sendData); 
 }
 
 
@@ -132,8 +132,7 @@ void loop() {
   lcd.clear();
 
   delay(1000);
-  Blynk.virtualWrite(V4, suhu); //Mengirim data suhu menurut pin V0 di Blynk
-  Blynk.virtualWrite(V5, kelembaban); //Mengirim data kelembaban pin V1
+
 
 }
 
@@ -162,4 +161,9 @@ void readMoist(){
   float sensor_analog = analogRead(ANALOG_SOIL);
   float moisture = ( 100 - ( (sensor_analog/4095.00) * 100 ) );
   delay(1000);
+}
+
+void sendData(){
+  Blynk.virtualWrite(V4, t);
+  Blynk.virtualWrite(V5, h); 
 }
