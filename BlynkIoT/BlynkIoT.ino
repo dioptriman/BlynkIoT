@@ -23,7 +23,7 @@
 #define REL_1 41
 #define REL_2 45
 #define REL_3 21
-#define DHTPIN 46
+#define DHTPIN 7
 
 
 #define button1_vpin    V1
