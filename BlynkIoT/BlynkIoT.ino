@@ -46,10 +46,10 @@ char pass[] = ""; //Password WiFi yang digunakan
 
 BlynkTimer timer;
 
-float t;
-float h;
-float moisture;
-float distance;
+float temp;
+float humid;
+float moisture_val;
+float distance_val;
 
 int relay1_state = 0;
 int relay2_state = 0;
@@ -107,11 +107,11 @@ void setup() {
 void loop() {
   // put your main code here, to run repeatedly:
   Blynk.run();
-  timer.run();
 
-  readHigh();
-  readAir();
-  readMoist();
+  distance_val = readHigh();
+  temp = readAir();
+  humid = readHumid();
+  moisture_val = readMoist();
 
   if(t == 33 || moisture < 50 || h < 30){
     relay1_state = 1;
@@ -128,26 +128,26 @@ void loop() {
   }
 
   lcd.setCursor(0, 0);
-  lcd.print(t);
+  lcd.print(temp);
   lcd.setCursor(0, 1);
-  lcd.print(h);
+  lcd.print(humid);
   lcd.setCursor(0, 2);
-  lcd.print(moisture);
+  lcd.print(moisture_val);
   lcd.setCursor(0, 3);
-  lcd.print(distance);
+  lcd.print(distance_val);
   lcd.clear();
 
-  Blynk.virtualWrite(V4, t); 
-  Blynk.virtualWrite(V5, h); 
-  Blynk.virtualWrite(V6, moisture); 
-  Blynk.virtualWrite(V7, distance); 
+  Blynk.virtualWrite(V4, temp); 
+  Blynk.virtualWrite(V5, humid); 
+  Blynk.virtualWrite(V6, moisture_val); 
+  Blynk.virtualWrite(V7, distance_val); 
 
   delay(1000);
 
 
 }
 
-void readHigh(){
+float readHigh(){
   digitalWrite(TRIG, LOW);
   delayMicroseconds(2);
   digitalWrite(TRIG, HIGH);
@@ -159,19 +159,28 @@ void readHigh(){
   Serial.print("Distance: ");
   Serial.println(distance);
   delay(100);
+
+  return distance;
 }
 
-void readAir(){
+float readAir(){
   float t = dht.readTemperature();
-  float h = dht.readHumidity();
   Serial.print(F("%  Temperature: "));
   Serial.print(t);
+  return t;
 }
 
-void readMoist(){
+float readHumid(){
+  float h = dht.readHumidity();
+  return h;
+}
+
+float readMoist(){
   float sensor_analog = analogRead(ANALOG_SOIL);
   float moisture = ( 100 - ( (sensor_analog/4095.00) * 100 ) );
   delay(1000);
+
+  return moisture;
 }
 
  
