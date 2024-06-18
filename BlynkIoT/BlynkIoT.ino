@@ -23,7 +23,7 @@
 #define REL_1 41
 #define REL_2 45
 #define REL_3 21
-#define DHTPIN 46
+#define DHTPIN 7
 
 
 #define button1_vpin    V1
@@ -100,7 +100,6 @@ void setup() {
   lcd.backlight();
 
   Blynk.begin(BLYNK_AUTH_TOKEN, ssid, pass);
-  timer.setInterval(1000L, sendData); 
 }
 
 
@@ -138,6 +137,11 @@ void loop() {
   lcd.print(distance);
   lcd.clear();
 
+  Blynk.virtualWrite(V4, t); 
+  Blynk.virtualWrite(V5, h); 
+  Blynk.virtualWrite(V6, moisture); 
+  Blynk.virtualWrite(V7, distance); 
+
   delay(1000);
 
 
@@ -170,9 +174,5 @@ void readMoist(){
   delay(1000);
 }
 
-void sendData(){
-  Blynk.virtualWrite(V4, t); 
-  Blynk.virtualWrite(V5, h); 
-  Blynk.virtualWrite(V6, moisture); 
-  Blynk.virtualWrite(V7, distance); 
-}
+ 
+
