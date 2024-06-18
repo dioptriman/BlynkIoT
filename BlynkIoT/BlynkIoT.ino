@@ -111,8 +111,7 @@ void loop() {
   distance_val = readHigh();
   temp = readAir();
   humid = readHumid();
-  float sensor_analog = analogRead(ANALOG_SOIL);
-  float moisture = ( 100 - ( (sensor_analog/4095.00) * 100 ) );
+  float moisture = analogRead(ANALOG_SOIL);
 
   if(temp == 33 || moisture < 50 || humid < 30){
     relay1_state = 1;
