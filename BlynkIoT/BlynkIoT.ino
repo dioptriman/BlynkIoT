@@ -113,14 +113,14 @@ void loop() {
   humid = readHumid();
   moisture_val = readMoist();
 
-  if(t == 33 || moisture < 50 || h < 30){
+  if(temp == 33 || moisture_val < 50 || humid < 30){
     relay1_state = 1;
     digitalWrite(REL_1, relay1_state);
     Blynk.virtualWrite(button1_vpin, relay1_state);
 
   }
 
-  if(distance > 22){
+  if(distance_val > 22){
     relay2_state = 1;
     digitalWrite(REL_2, relay2_state);
     Blynk.virtualWrite(button2_vpin, relay2_state);
