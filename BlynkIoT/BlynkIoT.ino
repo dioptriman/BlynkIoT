@@ -14,7 +14,7 @@
 #include "DHT.h"
 #include <LiquidCrystal_I2C.h>
 
-#define ANALOG_SOIL 38
+#define ANALOG_SOIL 5
 #define DIGITAL_SOIL 37
 #define TRIG 48
 #define ECHO 47
@@ -111,7 +111,8 @@ void loop() {
   distance_val = readHigh();
   temp = readAir();
   humid = readHumid();
-  float moisture = analogRead(ANALOG_SOIL);
+  float sensor_analog = analogRead(ANALOG_SOIL);
+  float moisture = ( 100 - ( (sensor_analog/4095.00) * 100 ) );
 
   if(temp == 33 || moisture < 50 || humid < 30){
     relay1_state = 1;
