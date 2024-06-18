@@ -111,9 +111,10 @@ void loop() {
   distance_val = readHigh();
   temp = readAir();
   humid = readHumid();
-  moisture_val = readMoist();
+  float sensor_analog = analogRead(ANALOG_SOIL);
+  float moisture = ( 100 - ( (sensor_analog/4095.00) * 100 ) );
 
-  if(temp == 33 || moisture_val < 50 || humid < 30){
+  if(temp == 33 || moisture < 50 || humid < 30){
     relay1_state = 1;
     digitalWrite(REL_1, relay1_state);
     Blynk.virtualWrite(button1_vpin, relay1_state);
@@ -132,14 +133,14 @@ void loop() {
   lcd.setCursor(0, 1);
   lcd.print(humid);
   lcd.setCursor(0, 2);
-  lcd.print(moisture_val);
+  lcd.print(moisture);
   lcd.setCursor(0, 3);
   lcd.print(distance_val);
   lcd.clear();
 
   Blynk.virtualWrite(V4, temp); 
   Blynk.virtualWrite(V5, humid); 
-  Blynk.virtualWrite(V6, moisture_val); 
+  Blynk.virtualWrite(V6, moisture); 
   Blynk.virtualWrite(V7, distance_val); 
 
   delay(1000);
@@ -173,14 +174,6 @@ float readAir(){
 float readHumid(){
   float h = dht.readHumidity();
   return h;
-}
-
-float readMoist(){
-  float sensor_analog = analogRead(ANALOG_SOIL);
-  float moisture = ( 100 - ( (sensor_analog/4095.00) * 100 ) );
-  delay(1000);
-
-  return moisture;
 }
 
  
