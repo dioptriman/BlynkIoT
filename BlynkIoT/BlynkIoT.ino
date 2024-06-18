@@ -100,7 +100,7 @@ void setup() {
   lcd.backlight();
 
   Blynk.begin(BLYNK_AUTH_TOKEN, ssid, pass);
-  timer.setInterval(1000L, myTimerEvent); 
+  timer.setInterval(1000L, sendData); 
 }
 
 
